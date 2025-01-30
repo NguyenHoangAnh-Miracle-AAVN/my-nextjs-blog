@@ -1,0 +1,92 @@
+---
+title: 'Build an Awesome Developer Portfolio Website'
+date: '2024-03-12'
+tags: ['portfolio', 'web development', 'Next.js', 'Tailwind CSS', 'EmailJS']
+summary: 'A step-by-step guide to creating a developer portfolio website using Next.js, Tailwind CSS, and EmailJS.'
+org_ref: 'https://dev.to/said7388/build-an-awesome-developer-portfolio-website-4cj9'
+---
+
+As a software developer, having a robust portfolio website is essential to showcase your abilities and experiences. To assist fellow developers, I have designed a portfolio website using Next.js, Tailwind CSS, and EmailJS. This article provides a step-by-step guide on setting up the project, along with the GitHub repository link.
+
+**Live Preview:** [abusaid.me](https://abusaid.me)
+
+**GitHub Repository:** [https://github.com/said7388/developer-portfolio](https://github.com/said7388/developer-portfolio)
+
+**Step 1: Clone the Repository**
+
+Begin by cloning the repository and navigating to the project directory:
+
+```bash
+git clone https://github.com/said7388/developer-portfolio.git
+cd developer-portfolio
+```
+
+\*\*Step 2: Install Dependencies
+
+Install all necessary packages using npm or yarn:
+
+```
+npm install
+# or
+yarn
+```
+
+\*\*Step 3: Customize Personal Data
+
+Update the personal data in utils/data/personalData.js to reflect your information. For example:
+
+```
+export const personalData = {
+  name: "Your Name",
+  profile: "/profile.png",
+  designation: "Full-Stack Software Developer",
+  description: "A brief description about yourself.",
+  email: "your.email@example.com",
+  phone: "+1234567890",
+  address: "Your City, Country",
+  github: "https://github.com/yourusername",
+  facebook: "https://www.facebook.com/yourprofile",
+  linkedIn: "https://www.linkedin.com/in/yourprofile",
+  twitter: "https://twitter.com/yourusername",
+  stackOverflow: "https://stackoverflow.com/users/youruserid/yourname",
+  leetcode: "https://leetcode.com/yourusername/",
+  devUsername: "yourDevToUsername",
+  resume: "link_to_your_resume.pdf",
+};
+```
+
+Replace the devUsername property with your dev.to username to fetch all blogs from your dev.to account.
+
+\*\*Step 4: Configure EmailJS
+
+Set up EmailJS to enable users to send emails to you through the contact form. Create a .env file in the root directory and add your EmailJS credentials:
+
+```
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+To obtain these credentials:
+
+- Sign up at EmailJS.
+- Create an email service using Gmail and note the Service ID.
+- Create an email template and note the Template ID.
+- Retrieve your Public Key from the EmailJS account dashboard.
+
+\*\*Step 5: Run the Development Server
+
+Start the development server using npm or yarn:
+
+```
+npm run dev
+# or
+yarn dev
+```
+
+Your portfolio website should now be up and running. If you find this project helpful, please consider starring the [GitHub repository](https://github.com/said7388/developer-portfolio). You can also connect with author on LinkedIn.
+
+Note: This project was inspired by the design of codewithmosh.com.
+
+This guide provides a comprehensive walkthrough for setting up a developer portfolio website using modern web development tools and services.
+::contentReference[oaicite:0]{index=0}

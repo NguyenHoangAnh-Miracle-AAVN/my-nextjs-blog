@@ -1,0 +1,42 @@
+---
+title: 'Secure JWT Storage: Best Practices'
+date: '2024-11-21'
+tags: ['JWT', 'Security', 'Best Practices']
+summary: 'An in-depth guide on securely storing JSON Web Tokens (JWTs) to protect against common vulnerabilities like XSS and CSRF attacks.'
+---
+
+JSON Web Tokens (JWTs) are widely used for secure data transmission in single-page applications. However, improper storage of JWTs can expose applications to security risks such as cross-site scripting (XSS) and cross-site request forgery (CSRF) attacks. This article discusses best practices for securely storing JWTs to mitigate these vulnerabilities.
+
+**Understanding JWT Storage Risks**
+
+Storing JWTs in client-side storage mechanisms like localStorage or sessionStorage can make them susceptible to XSS attacks. If an attacker injects malicious scripts into your application, they can access these tokens, compromising user data and application integrity.
+
+**Best Practices for Secure JWT Storage**
+
+1. **Use HTTP-Only Cookies**: Store JWTs in HTTP-only cookies to prevent client-side scripts from accessing them. This approach mitigates the risk of XSS attacks.
+
+2. **Implement SameSite Cookies**: Set the SameSite attribute to 'Strict' or 'Lax' to protect against CSRF attacks by restricting how cookies are sent with cross-site requests.
+
+3. **Ensure Secure Transmission**: Always transmit JWTs over HTTPS to protect them from being intercepted during transmission.
+
+4. **Set Appropriate Expiration**: Assign a reasonable expiration time to JWTs to limit the window of opportunity for attackers.
+
+5. **Regularly Rotate Keys**: Periodically rotate signing keys to enhance security and reduce the impact of potential key compromises.
+
+**Additional Resources**
+
+For further reading on secure JWT storage and related best practices, consider the following articles:
+
+- [The Developer’s Guide to JWT Storage](https://www.descope.com/blog/post/developer-guide-jwt-storage)
+
+- [JWT Authentication: Best Practices and When to Use It](https://blog.logrocket.com/jwt-authentication-best-practices/)
+
+- [LocalStorage vs Cookies: The Best-Practice Guide to Storing JWT Tokens](https://www.cyberchief.ai/2023/05/secure-jwt-token-storage.html)
+
+- [Top 3 Security Best Practices for Handling JWTs](https://snyk.io/blog/top-3-security-best-practices-for-handling-jwts/)
+
+- [JWT Security Best Practices](https://curity.io/resources/learn/jwt-best-practices/)
+
+By adhering to these best practices and consulting the additional resources, you can enhance the security of your applications and protect user data effectively.
+
+_For a more detailed exploration of each practice, please refer to the original article._ [Original Article](https://www.syncfusion.com/blogs/post/secure-jwt-storage-best-practices?ref=dailydev)

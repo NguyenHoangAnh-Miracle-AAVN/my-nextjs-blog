@@ -1,0 +1,206 @@
+---
+title: 'REST API Design Best Practices'
+date: '2025-01-10'
+tags: ['API Design', 'Backend Development', 'Best Practices']
+summary: 'A comprehensive guide to designing RESTful APIs that are easy to use, hard to misuse, and complete and concise.'
+org_ref: 'https://tigerabrodi.blog/rest-api-design-best-practices'
+---
+
+Designing RESTful APIs that are easy to read, hard to misuse, and complete and concise is essential for effective backend development. Below are key best practices to consider:
+
+## Core Principles
+
+- **Easy to Read and Work With:** Ensure your API is intuitive and straightforward for developers to use.
+
+- **Hard to Misuse:** Implement clear structures and conventions to prevent incorrect usage.
+
+- **Complete and Concise:** Provide all necessary information without unnecessary complexity.
+
+## Naming and URL Structure
+
+### Resource Naming
+
+- **Use Nouns, Not Verbs:** Represent resources with nouns.
+
+  - _Good:_ `/items`, `/employees`
+
+  - _Bad:_ `/createItems`, `/getEmployees`
+
+- **Use Plural Nouns for Collections:**
+
+  - _Example:_ `/orders` (not `/order`)
+
+- **Use Hyphens for Readability:**
+
+  - _Example:_ `inventory-management` (instead of `inventory_management`)
+
+### URL Structure
+
+- **Implement Logical Grouping for Nested Resources:**
+
+  - _Example:_ `/customers/{id}/orders`
+
+- **Avoid Deep Nesting:**
+
+  - Limit to `collection/resource/collection`
+
+- **Don't Mirror Database Structure:**
+
+  - Prevent exposing unnecessary information
+
+## Versioning
+
+- **Always Version Your APIs:**
+
+  - _Options:_
+
+    - Path Versioning: `/v1/store`, `/v2/store` (more common)
+
+    - Query Parameter: `?version=2`
+
+## Data Handling
+
+### Pagination
+
+- **Implement Pagination for Large Datasets:**
+
+  - _Example:_ `/items?lastItemId=1000&limit=20`
+
+- **Use Cursor-Based Pagination:**
+
+  - More efficient, similar to what Stripe does
+
+  - _Edit:_ Offset-based is better for experiences where you want pages, e.g., search in a booking system.
+
+### Filtering and Sorting
+
+- **Allow Filtering Through Query Parameters:**
+
+  - _Example:_ `/users?lastName=Smith&age=30`
+
+- **Support Field Selection to Limit Response Data:**
+
+  - _Example:_ `/products?fields=id,name,price`
+
+  - Can be faster since less data needs to be fetched from the database and serialized before sending over the network
+
+- **Enable Sorting with Clear Parameters:**
+
+  - _Example:_ `/posts?sort=+author,-datePublished`
+
+## API Operations
+
+### Idempotency
+
+- **Ensure Operations Are Idempotent Where Appropriate:**
+
+  - Multiple identical requests should result in the same state
+
+  - Particularly important for DELETE, PUT operations
+
+  - For sensitive operations, consider using idempotency keys.
+
+### Async Operations
+
+- **Use Status Code 202 for Long-Running Operations:**
+
+  - Indicates the operation is accepted but not completed
+
+- **Provide Status Endpoint for Tracking Progress:**
+
+  - _Example:_ `GET /orders/123/status`
+
+- **Include Status Endpoint URL in Location Header:**
+
+  - _Example:_ `Location: /orders/123/status`
+
+  - Helps clients know where to get the status of the operation. This follows the HATEOAS principle (Hypermedia as the Engine of Application State), which states that the API should tell the client what it can do next.
+
+- **Consider Supporting Operation Cancellation:**
+
+  - _Example:_ `DELETE /orders/123/cancel`
+
+### Partial Responses
+
+- **Support Partial Content Retrieval for Large Resources:**
+
+  - Useful for large files that you don't want to download all at once, think Netflix movies. They would be HUGE if you downloaded the whole thing at once.
+
+  - **Process:**
+
+    1. **Client Makes a HEAD Request to Check Resource Size:**
+
+       - _Example:_ `HEAD /files/big-video.mp4`
+
+       - Response Headers:
+
+         - `Accept-Ranges: bytes`
+
+         - `Content-Length: 100000000`
+
+         - `Content-Type: video/mp4`
+
+    2. **Client Requests Specific Chunks Using Range Header:**
+
+       - _Example:_ `GET /files/big-video.mp4`
+
+       - Header: `Range: bytes=0-1048575` (Request first 1 MB)
+
+    3. **Server Responds with Partial Content:**
+
+       - Response Headers:
+
+         - `HTTP/1.1 206 Partial Content`
+
+         - `Content-Range: bytes 0-1048575/100000000`
+
+         - `Content-Length: 1048576`
+
+       - Response Body: First 1 MB of data
+
+    4. **Client Requests Next Chunk:**
+
+       - _Example:_ `GET /files/big-video.mp4`
+
+       - Header: `Range: bytes=1048576-2097151` (Request second 1 MB)
+
+## Security
+
+- **Implement SSL/TLS Encryption:**
+
+  - Use HTTPS
+
+- **Use Proper Authentication and Authorization:**
+
+  - OAuth, JWT, etc.
+
+- **Apply Rate Limiting to Prevent DoS Attacks**
+
+- **Be Careful with Error Messages to Avoid Information Leakage:**
+
+  - Best to always craft a good error message: No inner details, clear what's wrong and what to do next.
+
+## Error Handling
+
+- **Return Appropriate HTTP Status Codes**
+
+- **Provide Clear Error Messages**
+
+- **Include Enough Information for Debugging Without Exposing Sensitive Details**
+
+- **Use 204 for Successful Empty Responses**
+
+## Documentation
+
+- **Use OpenAPI (formerly Swagger) for API Documentation**
+
+- **Document:**
+
+  - Endpoint structure
+
+  - Request/response formats
+
+  - Authentication requirements
+
+  - Error
+    ::contentReference[oaicite:0]{index=0}
